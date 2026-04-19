@@ -3,106 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Business Card + Admin</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>Smart Digital Business Card</title>
 
 <style>
-body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;margin:0}
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+body{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff}
+.container{max-width:420px;margin:auto;padding:20px}
+.card{background:rgba(255,255,255,0.08);backdrop-filter:blur(15px);padding:25px;border-radius:20px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+.profile{width:110px;height:110px;border-radius:50%;border:4px solid #fff;margin-bottom:15px}
+h1{font-size:22px}
+p{opacity:.8;margin:5px 0 15px}
+.btn{display:block;margin:8px 0;padding:12px;border-radius:12px;text-decoration:none;color:#fff;font-weight:bold;transition:.3s;border:none;cursor:pointer}
+.btn:hover{transform:scale(1.05)}
+.fb{background:#1877f2}.ig{background:#e1306c}.li{background:#0077b5}.wa{background:#25d366}.web{background:#ff9800}.call{background:#673ab7}.mail{background:#f44336}.pdf{background:#009688}
+.section{margin-top:20px}
+.gallery img{width:100%;border-radius:12px;margin-top:10px}
+.qr{margin-top:15px}
+.footer{margin-top:15px;font-size:12px;opacity:.6}
 
-/* ===== CARD ===== */
-.card{max-width:420px;margin:20px auto;background:#fff;border-radius:20px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
-h1{margin:0}
-.bio{color:#555;margin-top:10px}
-
-.btn{padding:12px;border:none;border-radius:10px;background:#4f46e5;color:#fff;width:100%;margin-top:10px;cursor:pointer}
-
-/* ===== ADMIN PANEL ===== */
-.admin{max-width:420px;margin:20px auto;background:#fff;padding:20px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
-.admin input,.admin textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc}
-
-.toggle{position:fixed;bottom:20px;right:20px;background:#0f172a;color:#fff;padding:12px 15px;border-radius:50%;cursor:pointer}
+/* PRINT STYLE FOR PDF */
+@media print {
+ body{background:#fff;color:#000}
+ .btn{display:none}
+ .card{box-shadow:none;background:#fff;color:#000}
+}
 </style>
 </head>
 
 <body>
+<div class="container" id="cardArea">
 
-<!-- ===== BUSINESS CARD ===== -->
 <div class="card">
-    <h1 id="name">MKS SOUROV</h1>
-    <p id="title">SOFTWARE DEVELOPER</p>
-    <p class="bio" id="bio">I am a software engineer.</p>
+<img src="https://images.unsplash.com/photo-1502767089025-6572583495b0" class="profile">
+<h1>Your Name</h1>
+<p>CEO | Smart Business</p>
 
-    <p>📞 <span id="phone">+8801305016780</span></p>
-    <p>📧 <span id="email">mkssourov@yahoo.com</span></p>
-    <p>🌐 <span id="website">www.swadhin.com.bd</span></p>
+<a href="tel:+8801234567890" class="btn call">📞 Call Me</a>
+<a href="mailto:email@example.com" class="btn mail">📧 Email Me</a>
+
+<a href="https://facebook.com" target="_blank" class="btn fb">Facebook</a>
+<a href="https://instagram.com" target="_blank" class="btn ig">Instagram</a>
+<a href="https://linkedin.com" target="_blank" class="btn li">LinkedIn</a>
+<a href="https://wa.me/8801234567890" target="_blank" class="btn wa">WhatsApp</a>
+<a href="#website" class="btn web">My Website</a>
+
+<!-- PDF SAVE BUTTON -->
+<button class="btn pdf" onclick="savePDF()">📄 Save as PDF</button>
+
+<div class="qr">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://yourwebsite.com" alt="QR Code">
+<p>Scan QR</p>
+</div>
 </div>
 
-<!-- ===== ADMIN PANEL ===== -->
-<div class="admin" id="adminPanel" style="display:none">
-    <h2>Admin Panel</h2>
-
-    <input type="text" id="a_name" placeholder="Name">
-    <input type="text" id="a_title" placeholder="Title">
-    <textarea id="a_bio" placeholder="Bio"></textarea>
-    <input type="text" id="a_phone" placeholder="Phone">
-    <input type="text" id="a_email" placeholder="Email">
-    <input type="text" id="a_website" placeholder="Website">
-
-    <button class="btn" onclick="saveData()">Publish</button>
+<div id="website" class="section card">
+<h2>🌐 My Website</h2>
+<p>This is your mini mobile website section.</p>
 </div>
 
-<!-- Toggle Button -->
-<div class="toggle" onclick="toggleAdmin()">
-    <i class="fa fa-cog"></i>
+<div class="section card gallery">
+<h2>📸 Gallery</h2>
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+</div>
+
+<div class="footer">
+<p>© 2026 Your Brand</p>
+</div>
+
 </div>
 
 <script>
-// Toggle admin panel
-function toggleAdmin(){
-    let panel=document.getElementById('adminPanel');
-    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+// PDF SAVE FUNCTION
+function savePDF(){
+ window.print();
 }
 
-// Save data
-function saveData(){
-    let data={
-        name:a_name.value,
-        title:a_title.value,
-        bio:a_bio.value,
-        phone:a_phone.value,
-        email:a_email.value,
-        website:a_website.value
-    };
+// smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+ a.addEventListener('click',function(e){
+  e.preventDefault();
+  document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+ })
+});
 
-    localStorage.setItem('cardData',JSON.stringify(data));
-    loadData();
-    alert("Updated Successfully!");
-}
-
-// Load data
-function loadData(){
-    let data=JSON.parse(localStorage.getItem('cardData'));
-    if(!data) return;
-
-    name.innerText=data.name;
-    title.innerText=data.title;
-    bio.innerText=data.bio;
-    phone.innerText=data.phone;
-    email.innerText=data.email;
-    website.innerText=data.website;
-
-    // fill admin inputs
-    a_name.value=data.name;
-    a_title.value=data.title;
-    a_bio.value=data.bio;
-    a_phone.value=data.phone;
-    a_email.value=data.email;
-    a_website.value=data.website;
-}
-
-window.onload=loadData;
+// greeting popup
+setTimeout(()=>{
+ alert("Welcome to your Digital Card 🚀");
+},1000);
 </script>
 
 </body>
