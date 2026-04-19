@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Business Card + Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;margin:0}
+
+/* ===== CARD ===== */
+.card{max-width:420px;margin:20px auto;background:#fff;border-radius:20px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
+h1{margin:0}
+.bio{color:#555;margin-top:10px}
+
+.btn{padding:12px;border:none;border-radius:10px;background:#4f46e5;color:#fff;width:100%;margin-top:10px;cursor:pointer}
+
+/* ===== ADMIN PANEL ===== */
+.admin{max-width:420px;margin:20px auto;background:#fff;padding:20px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
+.admin input,.admin textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc}
+
+.toggle{position:fixed;bottom:20px;right:20px;background:#0f172a;color:#fff;padding:12px 15px;border-radius:50%;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<!-- ===== BUSINESS CARD ===== -->
+<div class="card">
+    <h1 id="name">MKS SOUROV</h1>
+    <p id="title">SOFTWARE DEVELOPER</p>
+    <p class="bio" id="bio">I am a software engineer.</p>
+
+    <p>📞 <span id="phone">+8801305016780</span></p>
+    <p>📧 <span id="email">mkssourov@yahoo.com</span></p>
+    <p>🌐 <span id="website">www.swadhin.com.bd</span></p>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div class="admin" id="adminPanel" style="display:none">
+    <h2>Admin Panel</h2>
+
+    <input type="text" id="a_name" placeholder="Name">
+    <input type="text" id="a_title" placeholder="Title">
+    <textarea id="a_bio" placeholder="Bio"></textarea>
+    <input type="text" id="a_phone" placeholder="Phone">
+    <input type="text" id="a_email" placeholder="Email">
+    <input type="text" id="a_website" placeholder="Website">
+
+    <button class="btn" onclick="saveData()">Publish</button>
+</div>
+
+<!-- Toggle Button -->
+<div class="toggle" onclick="toggleAdmin()">
+    <i class="fa fa-cog"></i>
+</div>
+
+<script>
+// Toggle admin panel
+function toggleAdmin(){
+    let panel=document.getElementById('adminPanel');
+    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+// Save data
+function saveData(){
+    let data={
+        name:a_name.value,
+        title:a_title.value,
+        bio:a_bio.value,
+        phone:a_phone.value,
+        email:a_email.value,
+        website:a_website.value
+    };
+
+    localStorage.setItem('cardData',JSON.stringify(data));
+    loadData();
+    alert("Updated Successfully!");
+}
+
+// Load data
+function loadData(){
+    let data=JSON.parse(localStorage.getItem('cardData'));
+    if(!data) return;
+
+    name.innerText=data.name;
+    title.innerText=data.title;
+    bio.innerText=data.bio;
+    phone.innerText=data.phone;
+    email.innerText=data.email;
+    website.innerText=data.website;
+
+    // fill admin inputs
+    a_name.value=data.name;
+    a_title.value=data.title;
+    a_bio.value=data.bio;
+    a_phone.value=data.phone;
+    a_email.value=data.email;
+    a_website.value=data.website;
+}
+
+window.onload=loadData;
+</script>
+
+</body>
+</html>
